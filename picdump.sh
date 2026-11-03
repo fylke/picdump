@@ -147,9 +147,9 @@ validate_settings() {
     [[ "$RETRY_DELAY" =~ ^[0-9]+$ ]] ||
         fail "Retry delay must be a non-negative integer"
     if [[ -n "$SSH_PORT" ]]; then
-        [[ "$SSH_PORT" =~ ^[1-9][0-9]{0,4}$ ]] &&
-            ((SSH_PORT <= 65535)) ||
+        if ! [[ "$SSH_PORT" =~ ^[1-9][0-9]{0,4}$ ]] || ((SSH_PORT > 65535)); then
             fail "SSH port must be between 1 and 65535"
+        fi
     fi
     if [[ -n "$LABEL" ]]; then
         [[ "$LABEL" =~ ^[A-Za-z0-9][A-Za-z0-9._\ -]*$ ]] ||
