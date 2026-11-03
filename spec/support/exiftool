@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Stub exiftool: -T calls return the fixture table, others a single date.
+for arg in "$@"; do
+    if [[ "$arg" == -T ]]; then
+        cat "$FAKE_EXIF_TABLE"
+        exit 0
+    fi
+done
+printf '%s\n' "${FAKE_EXIF_DATE:-}"
